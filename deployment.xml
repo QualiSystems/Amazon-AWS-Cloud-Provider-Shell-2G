@@ -29,7 +29,7 @@
                  <source>src</source>
             </sources>
             <!-- the driver name of the driver to update -->
-            <targetName>AwsCloudProviderShell2GDriver</targetName>
+            <targetName>AmazonAwsCloudProviderShell2GDriver</targetName>
         </driver>
     </drivers>
 

@@ -1,4 +1,4 @@
-<Driver Description="" MainClass="driver.AwsCloudProviderShell2GDriver" Name="AwsCloudProviderShell2GDriver" Version="1.0.0" PythonVersion="3">
+<Driver Description="" MainClass="driver.AmazonAwsCloudProviderShell2GDriver" Name="AmazonAwsCloudProviderShell2GDriver" Version="1.0.0" PythonVersion="3">
     <Layout>
         <Category Name="Connectivity">
             <Command Description="" DisplayName="Refresh IP" EnableCancellation="true" Name="remote_refresh_ip" Tags="remote_connectivity,allow_shared" />

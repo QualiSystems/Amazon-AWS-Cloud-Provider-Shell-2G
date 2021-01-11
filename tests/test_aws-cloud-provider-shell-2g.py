@@ -1,11 +1,11 @@
 import unittest
 
-from src.driver import AwsCloudProviderShell2GDriver
+from src.driver import AmazonAwsCloudProviderShell2GDriver
 
 
 class TestAwsCloudProviderShell2GDriver(unittest.TestCase):
     def setUp(self):
-        AwsCloudProviderShell2GDriver()
+        AmazonAwsCloudProviderShell2GDriver()
 
     def tearDown(self):
         pass

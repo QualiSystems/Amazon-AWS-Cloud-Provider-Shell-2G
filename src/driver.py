@@ -12,7 +12,7 @@ from cloudshell.cp.aws.models.deploy_aws_ec2_ami_instance_resource_model import 
 )
 
 
-class AwsCloudProviderShell2GDriver(ResourceDriverInterface):
+class AmazonAwsCloudProviderShell2GDriver(ResourceDriverInterface):
     def cleanup(self):
         pass
 
