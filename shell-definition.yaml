@@ -3,7 +3,7 @@ tosca_definitions_version: tosca_simple_yaml_1_0
 metadata:
   template_name: Amazon AWS Cloud Provider Shell 2G
   template_author: Quali
-  template_version: 0.1.4
+  template_version: 0.1.12
   template_icon: AWS.png
 
 description: >
@@ -21,6 +21,18 @@ node_types:
         type: string
         default: ""
         description: "The public cloud region to be used by this cloud provider resource."
+        constraints:
+          - valid_values:
+            - us-east-1
+            - us-east-2
+            - us-west-1
+            - us-west-2
+            - eu-central-1
+            - eu-west-1
+            - ap-southeast-1
+            - ap-southeast-2
+            - ap-northeast-1
+            - ap-northeast-2
       AWS Mgmt SG ID:
         type: string
         default: ""
@@ -50,7 +62,7 @@ node_types:
         description: "The max number of I/O operations per second that the volume can
         support. For Provisioned IOPS (SSD) volumes, you can provision up to 30 IOPS per
          GiB. If left empty the default in the AMI will be used. For example 240."
-      Networks In Use:
+      Networks in use:
         type: string
         default: ""
         description: "Reserved networks that will be excluded when allocating Sandbox
@@ -68,10 +80,22 @@ node_types:
         determines how the sandbox VPC will chose a CIDR block. In Dynamic Mode, the
         CIDR block is chosen by Cloudshell Server. In Static Mode, the CIDR block for
         all sandboxes allocated will be taken from VPC CIDR attribute on AWS cloud provider."
+        constraints:
+          - valid_values: [ "Dynamic", "Static" ]
       VPC CIDR:
         type: string
         default: ""
         description: "The CIDR used for sandbox VPC when VPC Mode is Static."
+      AWS Secret Access Key:
+        type: cloudshell.datatypes.Password
+        default: ""
+        description: "If empty the role that is configured on the Execution Server
+        instance in the Management VPC is used."
+      AWS Access Key ID:
+        type: cloudshell.datatypes.Password
+        default: ""
+        description: "If empty the role that is configured on the Execution Server
+        instance in the Management VPC is used."
     capabilities:
       concurrent_command_capability:
         type: cloudshell.capabilities.SupportConcurrentCommands
@@ -83,10 +107,13 @@ node_types:
             default: true
           auto_discovery_description:
             type: string
-            default: Describe the auto discovery
+            default: "After filling in all the inputs click Start Discovery to complete
+            the cloud provider creation process"
           inventory_description:
             type: string
-            default: Describe the resource shell template
+            default: "AWS EC2 template will create a AWS EC2 resource in CloudShell.
+            Once the AWS EC2 is modeled correctly in CloudShell it will be possible to
+            deploy Apps on this AWS EC2."
           hide_address:
             type: string
             default: true
@@ -97,16 +124,16 @@ node_types:
             resource."
             constraints:
               - valid_values:
-                - "us-east-1"
-                - "us-east-2"
-                - "us-west-1"
-                - "us-west-2"
-                - "eu-central-1"
-                - "eu-west-1"
-                - "ap-southeast-1"
-                - "ap-southeast-2"
-                - "ap-northeast-1"
-                - "ap-northeast-2"
+                - us-east-1
+                - us-east-2
+                - us-west-1
+                - us-west-2
+                - eu-central-1
+                - eu-west-1
+                - ap-southeast-1
+                - ap-southeast-2
+                - ap-northeast-1
+                - ap-northeast-2
           AWS Mgmt SG ID:
             type: string
             default: ""
@@ -137,7 +164,7 @@ node_types:
             description: "The max number of I/O operations per second that the volume can
             support. For Provisioned IOPS (SSD) volumes, you can provision up to 30 IOPS
             per GiB. If left empty the default in the AMI will be used. For example 240."
-          Networks In Use:
+          Networks in use:
             type: string
             default: ""
             description: "Reserved networks that will be excluded when allocating Sandbox
@@ -162,7 +189,16 @@ node_types:
             type: string
             default: ""
             description: "The CIDR used for sandbox VPC when VPC Mode is Static."
-
+          AWS Secret Access Key:
+            type: cloudshell.datatypes.Password
+            default: ""
+            description: "If empty the role that is configured on the Execution Server
+            instance in the Management VPC is used."
+          AWS Access Key ID:
+            type: cloudshell.datatypes.Password
+            default: ""
+            description: "If empty the role that is configured on the Execution Server
+            instance in the Management VPC is used."
     artifacts:
       icon:
         file: AWS.png
