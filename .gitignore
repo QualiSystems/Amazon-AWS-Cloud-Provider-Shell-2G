@@ -60,3 +60,4 @@ target/
 cloudshell_config.yml
 
 .idea/
+src/_test.py

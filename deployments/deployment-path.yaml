@@ -3,7 +3,7 @@ tosca_definitions_version: tosca_simple_yaml_1_0
 metadata:
   template_name: AmazonAWSCloudProviderShell2G
   template_author: Quali
-  template_version: 1.0.0
+  template_version: 1.0.1
   template_icon: DeploymentTypes-AWS-EC2.png
 
 description: >
@@ -14,7 +14,7 @@ imports:
 
 node_types:
 
-  vendor.resource.MyDeploymentPath:
+  vendor.resource.Amazon AWS EC2 Instance 2G:
     derived_from: cloudshell.nodes.CustomDeploymentOption
     properties:
       AWS AMI Id:
@@ -52,14 +52,80 @@ node_types:
         tags: [ user_input ]
       Public IP Options:
         type: string
-        default: ""
+        default: "No Public IP"
         description: "Select whether to create a public IP. If the VM will be connected
         to more than one subnet, and public IP is required in at least one of them, the
         'elastic IPs' option ought to be selected."
         tags: [ user_input ]
         constraints:
           - valid_values: [ "No Public IP", "Public IP (single subnet)", "Elastic IPs" ]
-
+      Storage Size:
+        type: integer
+        default: 0
+        description: "The root volume size. The value must be greater or equal to the
+        size of the root snapshot used. If set to zero the default defined in the image
+        will be used. For example: 30."
+      Storage IOPS:
+        type: integer
+        default: 0
+        description: "The default number of I/O operations per second that the root
+        volume can support. This parameter is used only for storage of type io1, in
+        which you can provision up to 30 IOPS per GiB. If set to zero the default in
+        the image will be used. For example: 240."
+      Storage Type:
+        type: string
+        default: "auto"
+        description: "The type of the storage volume. In AWS there are few EBS Volume
+        types that can be used, gp2 and io1 for SSD, st1 and sc1 for HDD or the standard
+        type which is the old generation EBS volume type. If auto is selected the
+        storage type defined in the image will be used."
+        constraints:
+          - valid_values: [ "auto", "gp2", "io1", "st1", "sc1", "standard" ]
+      Root Volume Name:
+        type: string
+        default: ""
+        description: "The available device names for the volume. Depending on the block
+        device driver of the selected AMI's kernel, the device may be attached with a
+        different name than what you specify. If left empty the default defined in the
+        AMI will be used. For example: /dev/xvda"
+      Wait for Status Check:
+        type: boolean
+        default: false
+        description: "If enabled the app deployment will end successfully only after
+        instance status checks has passed. The status checks include network
+        connectivity, physical host status, system status and more."
+      Wait for Credentials:
+        type: boolean
+        default: true
+        description: "Enable in order to retrieve credentials from a Windows machine.
+        Note that if this parameter is enabled and the credentials weren't retrieved
+        within 15 minutes the deployment will fail."
+      Custom Tags:
+        type: string
+        default: ""
+        description: "Custom tags per EC2 instance, Comma separated values e.g:
+        tag_name:ec2_instance,tag_name2:ec2_instance2"
+        tags: [ user_input ]
+      User Data URL:
+        type: string
+        default: ""
+        description: "The URL of the user data script"
+        tags: [ user_input ]
+      User Data Parameters:
+        type: string
+        default: ""
+        description: "Parameters to execute the script e.g: 'param1 param2 ' will end
+        in running the command like this :'./file.sh param1 param2' "
+        tags: [ user_input ]
+      Private IP:
+        type: string
+        default: ""
+        description: "When the VPC is in static mode this attribute is used to set a
+        static private IP for the deployed app. To set static private IPs in multi
+        subnet mode the expected value is a json string that maps the subnet request
+        CIDR to the requested static private IP.
+        Example: {\&quot;10.0.0.0/28\&quot;: \&quot;10.0.0.6\&quot;}"
+        tags: [ user_input ]
     artifacts:
       icon:
         file: DeploymentTypes-AWS-EC2.png
