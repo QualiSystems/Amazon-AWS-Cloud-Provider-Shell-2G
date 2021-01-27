@@ -3,7 +3,7 @@ tosca_definitions_version: tosca_simple_yaml_1_0
 metadata:
   template_name: AmazonAWSCloudProviderShell2G
   template_author: Quali
-  template_version: 1.0.1
+  template_version: 1.0.2
   template_icon: DeploymentTypes-AWS-EC2.png
 
 description: >
@@ -124,7 +124,7 @@ node_types:
         static private IP for the deployed app. To set static private IPs in multi
         subnet mode the expected value is a json string that maps the subnet request
         CIDR to the requested static private IP.
-        Example: {\&quot;10.0.0.0/28\&quot;: \&quot;10.0.0.6\&quot;}"
+        Example: {'10.0.0.0/28': '10.0.0.6'}"
         tags: [ user_input ]
     artifacts:
       icon:
