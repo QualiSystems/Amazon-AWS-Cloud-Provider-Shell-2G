@@ -1,3 +1,4 @@
 cloudshell-shell-core~=5.0
 cloudshell-cp-core~=1.2.0
 cloudshell-cp-aws~=3.0
+rpdb

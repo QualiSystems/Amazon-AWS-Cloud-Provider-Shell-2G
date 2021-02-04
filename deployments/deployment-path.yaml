@@ -65,6 +65,7 @@ node_types:
         description: "The root volume size. The value must be greater or equal to the
         size of the root snapshot used. If set to zero the default defined in the image
         will be used. For example: 30."
+        tags: [ user_input ]
       Storage IOPS:
         type: integer
         default: 0
@@ -72,6 +73,7 @@ node_types:
         volume can support. This parameter is used only for storage of type io1, in
         which you can provision up to 30 IOPS per GiB. If set to zero the default in
         the image will be used. For example: 240."
+        tags: [ user_input ]
       Storage Type:
         type: string
         default: "auto"
@@ -81,6 +83,7 @@ node_types:
         storage type defined in the image will be used."
         constraints:
           - valid_values: [ "auto", "gp2", "io1", "st1", "sc1", "standard" ]
+        tags: [ user_input ]
       Root Volume Name:
         type: string
         default: ""
@@ -88,18 +91,33 @@ node_types:
         device driver of the selected AMI's kernel, the device may be attached with a
         different name than what you specify. If left empty the default defined in the
         AMI will be used. For example: /dev/xvda"
+        tags: [ user_input ]
+      Autoload:
+        type: boolean
+        default: true
+        description: "Enables the automatic execution of the Autoload command during
+        reservation Setup."
+        tags: [ user_input ]
+      Wait for IP:
+        type: boolean
+        default: false
+        description: "If set to False the deployment will not wait for the VM to get an
+        ip"
+        tags: [ user_input ]
       Wait for Status Check:
         type: boolean
         default: false
         description: "If enabled the app deployment will end successfully only after
         instance status checks has passed. The status checks include network
         connectivity, physical host status, system status and more."
+        tags: [ user_input ]
       Wait for Credentials:
         type: boolean
         default: true
         description: "Enable in order to retrieve credentials from a Windows machine.
         Note that if this parameter is enabled and the credentials weren't retrieved
         within 15 minutes the deployment will fail."
+        tags: [ user_input ]
       Custom Tags:
         type: string
         default: ""
