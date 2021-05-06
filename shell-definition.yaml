@@ -81,11 +81,15 @@ node_types:
         CIDR block is chosen by Cloudshell Server. In Static Mode, the CIDR block for
         all sandboxes allocated will be taken from VPC CIDR attribute on AWS cloud provider."
         constraints:
-          - valid_values: [ "Dynamic", "Static" ]
+          - valid_values: [ "Dynamic", "Static", "Shared" ]
       VPC CIDR:
         type: string
         default: ""
         description: "The CIDR used for sandbox VPC when VPC Mode is Static."
+      VPC ID:
+        type: string
+        default: ""
+        description: "VPC ID for the Shared VPC Mode"
       AWS Secret Access Key:
         type: cloudshell.datatypes.Password
         default: ""
@@ -96,6 +100,14 @@ node_types:
         default: ""
         description: "If empty the role that is configured on the Execution Server
         instance in the Management VPC is used."
+      Transit Gateway ID:
+        type: string
+        default: ""
+        description: "Transit Gateway ID"
+      Additional Management Networks:
+        type: string
+        default: ""
+        description: "Additional Management Networks. Example, 10.0.1.0/24,10.0.3.0/24"
     capabilities:
       concurrent_command_capability:
         type: cloudshell.capabilities.SupportConcurrentCommands
@@ -184,11 +196,15 @@ node_types:
             for all sandboxes allocated will be taken from VPC CIDR attribute on AWS
             cloud provider."
             constraints:
-              - valid_values: [ "Dynamic", "Static" ]
+              - valid_values: [ "Dynamic", "Static", "Shared" ]
           VPC CIDR:
             type: string
             default: ""
             description: "The CIDR used for sandbox VPC when VPC Mode is Static."
+          VPC ID:
+            type: string
+            default: ""
+            description: "VPC ID for the Shared VPC Mode"
           AWS Secret Access Key:
             type: cloudshell.datatypes.Password
             default: ""
@@ -199,6 +215,15 @@ node_types:
             default: ""
             description: "If empty the role that is configured on the Execution Server
             instance in the Management VPC is used."
+          Transit Gateway ID:
+            type: string
+            default: ""
+            description: "Transit Gateway ID"
+          Additional Management Networks:
+            type: string
+            default: ""
+            description: "Additional Management Networks.
+            Example, 10.0.1.0/24,10.0.3.0/24"
     artifacts:
       icon:
         file: AWS.png
