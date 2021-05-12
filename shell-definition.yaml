@@ -3,7 +3,7 @@ tosca_definitions_version: tosca_simple_yaml_1_0
 metadata:
   template_name: Amazon AWS Cloud Provider Shell 2G
   template_author: Quali
-  template_version: 0.1.14
+  template_version: 0.2.1
   template_icon: AWS.png
 
 description: >
@@ -108,6 +108,14 @@ node_types:
         type: string
         default: ""
         description: "Additional Management Networks. Example, 10.0.1.0/24,10.0.3.0/24"
+      VPN Gateway ID:
+        type: string
+        default: ""
+        description: "VGW ID"
+      VGW CIDRs:
+        type: string
+        default: ""
+        description: "VGW CIDRs. Example, 10.1.0.0/24,10.3.0.0/16"
     capabilities:
       concurrent_command_capability:
         type: cloudshell.capabilities.SupportConcurrentCommands
@@ -224,6 +232,14 @@ node_types:
             default: ""
             description: "Additional Management Networks.
             Example, 10.0.1.0/24,10.0.3.0/24"
+          VPN Gateway ID:
+            type: string
+            default: ""
+            description: "VGW ID"
+          VGW CIDRs:
+            type: string
+            default: ""
+            description: "VGW CIDRs. Example, 10.1.0.0/24,10.3.0.0/16"
     artifacts:
       icon:
         file: AWS.png
