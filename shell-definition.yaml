@@ -82,11 +82,11 @@ node_types:
         all sandboxes allocated will be taken from VPC CIDR attribute on AWS cloud provider."
         constraints:
           - valid_values: [ "Dynamic", "Static", "Shared" ]
-      VPC CIDR:
+      Static VPC CIDR:
         type: string
         default: ""
         description: "The CIDR used for sandbox VPC when VPC Mode is Static."
-      VPC ID:
+      Shared VPC ID:
         type: string
         default: ""
         description: "VPC ID for the Shared VPC Mode"
@@ -112,7 +112,7 @@ node_types:
         type: string
         default: ""
         description: "VGW ID"
-      VGW CIDRs:
+      VPN CIDRs:
         type: string
         default: ""
         description: "VGW CIDRs. Example, 10.1.0.0/24,10.3.0.0/16"
@@ -205,24 +205,14 @@ node_types:
             cloud provider."
             constraints:
               - valid_values: [ "Dynamic", "Static", "Shared" ]
-          VPC CIDR:
+          Static VPC CIDR:
             type: string
             default: ""
             description: "The CIDR used for sandbox VPC when VPC Mode is Static."
-          VPC ID:
+          Shared VPC ID:
             type: string
             default: ""
             description: "VPC ID for the Shared VPC Mode"
-          AWS Secret Access Key:
-            type: cloudshell.datatypes.Password
-            default: ""
-            description: "If empty the role that is configured on the Execution Server
-            instance in the Management VPC is used."
-          AWS Access Key ID:
-            type: cloudshell.datatypes.Password
-            default: ""
-            description: "If empty the role that is configured on the Execution Server
-            instance in the Management VPC is used."
           Transit Gateway ID:
             type: string
             default: ""
@@ -235,11 +225,11 @@ node_types:
           VPN Gateway ID:
             type: string
             default: ""
-            description: "VGW ID"
-          VGW CIDRs:
+            description: "VPN Gateway ID"
+          VPN CIDRs:
             type: string
             default: ""
-            description: "VGW CIDRs. Example, 10.1.0.0/24,10.3.0.0/16"
+            description: "VPN Gateway CIDRs. Example, 10.1.0.0/24,10.3.0.0/16"
     artifacts:
       icon:
         file: AWS.png
