@@ -48,7 +48,7 @@ node_types:
         of the sandbox. The syntax is
         port[single/range]:protocol[tcp(default)/udp]:source[cidr] with semi-colon
         separation. The default source cidr, if not specified, is any (0.0.0.0/0).
-        For example: 80;443:tcp:10.0.0.0/24;200-220:udp."
+        For example: 80;443:tcp:10.0.0.0/24;200-220:udp;icmp;icmp:10.0.0.0/24"
         tags: [ user_input ]
       Public IP Options:
         type: string
