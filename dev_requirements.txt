@@ -1,6 +1,4 @@
 tox
 pre-commit
 -r test_requirements.txt
-cloudshell-shell-core~=5.0
-git+https://github.com/QualiSystems/cloudshell-cp-core.git@python3-fixes#subdirectory=package
-git+https://github.com/QualiSystems/cloudshell-cp-aws.git@python3
+-r src/requirements.txt
