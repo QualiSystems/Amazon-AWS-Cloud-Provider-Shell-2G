@@ -1,6 +1,6 @@
 ![Image][1]
 
-# **Kubernetes Cloud Provider Shell 2G**
+# **Amazon AWS Cloud Provider Shell 2G**
 
 Release date: December 2020
 
@@ -28,25 +28,23 @@ CloudShell Cloud Providers shells provide the ability to provision Apps on a vir
 
 The Apps can be modeled a variety of types of services, depending on the Cloud Provider, including VMs, Containers, or Emulated instances.  
 
-### Kubernetes Cloud Provider Shell 2G
-Kubernetes Cloud Provider Shell 2G provides you with apps deployment and management capabilities on a Kubernetes cluster.
+### Amazon AWS Cloud Provider Shell 2G
+Amazong AWS Cloud Provider Shell 2G provides you with app deployment and management capabilities on AWS EC2.
 
-The shell supports connection to a self managed cluster, an Azure Kubernetes Service cluster, or an Amazon Elastic Kubernetes Service cluster.  
+The shell supports connection to a AWS EC2.  
 
-For more information on Kubernetes, see the vendor's official product documentation.
+For more information on AWS, see the vendor's official product documentation.
 
 ### Standard version
-Kubernetes Cloud Provider Shell 2G is based on the Cloud Provider Standard version **1.0.0**.
+Amazon AWS Cloud Provider Shell 2G is based on the Cloud Provider Standard version **1.0.0**.
 
 For detailed information about the shell’s structure and attributes, see the [Cloud Provider Standard](https://github.com/QualiSystems/cloudshell-standards/blob/master/Documentation/cloud_provider_standard.md) in GitHub.
 
 ### Requirements
 
-Release: Kubernetes Cloud Provider Shell 2G
+Release: AMazong AWS Cloud Provider Shell 2G
 
 ▪ CloudShell version **9.3 and above**
-
-▪ Kubernetes version **1.18**
 
 **Note:** If your CloudShell version does not support this shell, you should consider upgrading to a later version of CloudShell or contact customer support. 
 
@@ -54,7 +52,7 @@ Release: Kubernetes Cloud Provider Shell 2G
 
 The shell's data model includes all shell metadata, families, and attributes.
 
-#### **Kubernetes Cloud Provider Shell 2G Attributes**
+#### **Amazon AWS Cloud Provider Shell 2G Attributes**
 
 The attribute names and types that are derived from the standard are listed in the following section of the Cloud Provider Shell Standard:
 
@@ -64,9 +62,21 @@ The following table describes attributes that are unique to this shell and are n
 
 |Attribute Name|Data Type|Description|
 |:---|:---|:---|
-|Config File Path|String|Full Path to a standalone kubernetes config file containing all the relevant information for authentication. The file must reside on the Execution Server machine. To generate a portable config file, run command 'kubectl config view --flatten'.|
-|AWS CP Resource Name|String|(Optional - EKS only) The CloudShell resource name for the AWS Cloud Provider Resource|
-|External Service Type|String|The service type the shell will create for external services. __LoadBalancer type__ should be used when the Kubernetes cluster is hosted on a supported public cloud provider like AWS and Azure. Use __NodePort__ when the cluster is self-hosted.|
+|Region|Lookup|The public cloud region to be used by this cloud provider resource.|
+|AWS MGMT SG ID|string|The Management VPC's security group. Will be used to configure the communication between the Management VPC's instances and the Sandbox instances. For example sg-0d104876.|
+|AWS MGMT VPC ID|string|The Management VPC ID. Will be used to configure the communication between the Management VPC and the Sandbox VPC. For example vpc-633fb904.|
+|KEYPARIS LOCATION|string|The name of an S3 bucket in which PEM files will be located. Each active Sandbox will have a PEM file under a designated folder. For example: sandbox-management.|
+|MAX STORAGE SIZE|numeric|The max number of GiB of the root volume. Must be greater than zero or the size of the snapshot used. If kept empty the default size of the snapshot will be used. For example 8.|
+|MAX STORAGE IOPS|numeric|The max number of I/O operations per second that the volume can support. For Provisioned IOPS (SSD) volumes, you can provision up to 30 IOPS per GiB. If left empty the default in the AMI will be used. For example 240.|
+|NETWORKS IN USE|string|Reserved networks that will be excluded when allocating Sandbox networks. Should include at least the management network. The syntax is comma separated CIDRs. For example: 10.0.0.0/24, 10.1.0.0/16, 172.31.0.0/24.|
+|INSTANCE TYPE|string|The AWS EC2 instance type. The instance type determines the CPU, memory and networking capacity of the instance. For example: t2.large.|
+|VPC MODE|lookup|Every sandbox with AWS apps deploys a VPC to AWS. This setting determines how the sandbox VPC will chose a CIDR block. In Dynamic Mode, the CIDR block is chosen by Cloudshell Server. In Static Mode, the CIDR block for all sandboxes allocated will be taken from VPC CIDR attribute on AWS cloud provider.|
+|STATIC VPC CIDR|string|The CIDR used for sandbox VPC when __VPC Mode__ is __Static__.|
+|SHARED VPC ID|string|VPC ID for the Shared VPC Mode|
+|TRANSIT GATEWAY ID|string|Transit Gateway ID|
+|ADDITIONAL MANAGEMENT NETWORKS|string|Additional Management Networks. Example: "10.0.1.0/24,10.0.3.0/24"|
+|VPN GATEWAY ID|string|VGW ID|
+|VPN CIDR|string|VGW CIDRs. Example: "10.1.0.0/24,10.3.0.0/16"|
 
 
 ### Automation
@@ -81,7 +91,7 @@ For detailed information on each available commands, see the following section o
 
 
 # Downloading the Shell
-The Kubernetes Cloud Provider Shell 2G shell is available from the [Quali Community Integrations](https://community.quali.com/integrations) page. 
+The Amazon AWS Cloud Provider Shell 2G shell is available from the [Quali Community Integrations](https://community.quali.com/integrations) page. 
 
 Download the files into a temporary location on your local machine. 
 
@@ -89,11 +99,12 @@ The shell comprises of the following files:
 
 |File name|Description|
 |:---|:---|
-|Kubernetes Cloud Provider Shell 2G.zip|Device shell package|
-|cloudshell-kubernetes-dependencies-package-1.0.x.zip|Shell Python dependencies (for offline deployments only)|
+|Amazon AWS Cloud Provider Shell 2G.zip|Device shell package|
+|cloudshell-Amazon-AWS-Cloud-Provider-Shell-2G-dependencies-win32-package-1.0.x.zip, cloudshell-Amazon-AWS-Cloud-Provider-Shell-2G-dependencies-linux-package-1.0.x.zip - 
+|Shell Python dependencies (for offline deployments only)|
 
 # Importing and Configuring the Shell
-This section describes how to import the Kubernetes Cloud Provider Shell 2G shell and configure and modify the Cloud Provider Resource created using the shell.
+This section describes how to import the Amazon AWS Cloud Provider Shell 2G shell and configure and modify the Cloud Provider Resource created using the shell.
 
 ### Importing the shell into CloudShell
 
@@ -138,54 +149,37 @@ For more information, see [Configuring CloudShell to Execute Python Commands in 
 ### Configuring the Cloud Provider Resource
 This section explains how to create a new Cloud Provider Resource using the shell.
 
-**To create a Kubernetes Cloud Provider Resource:**  
+**To create a Amazon AWS Cloud Provider Resource:**  
   1. In the CloudShell Portal, in the **Inventory** dashboard, click **Add New**.
      ![Image][2]
      
-  3. From the list, select **Kubernetes Cloud Provider Shell 2G**.
+  3. From the list, select **Amazon AWS Cloud Provider Shell 2G**.
   
   4. Click **Create**.
   
   5. In the **Resource** dialog box, enter the following attributes with data from step 1:
-        - **Config File Path** - The full path to a standalone Kubernetes _config_ file (no extension) containing all the relevant information for authentication (e.g. "C:\Kubernetes\config". The file must reside on the Execution Server machine. To generate a portable config file, run command 'kubectl config view --flatten'. 
-        - **AWS CP Resource Name** - **(Optional - EKS only)** The CloudShell resource name for the AWS Cloud Provider Resource
-        - **External Service Type** - The service type the shell will create for external services. __LoadBalancer__ types should be used when the Kubernetes cluster is hosted on a supported public cloud provider like GCP, AWS or Azure. Use __NodePort__ when the cluster is self-hosted.
+|:---|:---|:---|
+|Region|Lookup|The public cloud region to be used by this cloud provider resource.|
+|AWS MGMT SG ID|string|The Management VPC's security group. Will be used to configure the communication between the Management VPC's instances and the Sandbox instances. For example sg-0d104876.|
+|AWS MGMT VPC ID|string|The Management VPC ID. Will be used to configure the communication between the Management VPC and the Sandbox VPC. For example vpc-633fb904.|
+|KEYPARIS LOCATION|string|The name of an S3 bucket in which PEM files will be located. Each active Sandbox will have a PEM file under a designated folder. For example: sandbox-management.|
+|MAX STORAGE SIZE|numeric|The max number of GiB of the root volume. Must be greater than zero or the size of the snapshot used. If kept empty the default size of the snapshot will be used. For example 8.|
+|MAX STORAGE IOPS|numeric|The max number of I/O operations per second that the volume can support. For Provisioned IOPS (SSD) volumes, you can provision up to 30 IOPS per GiB. If left empty the default in the AMI will be used. For example 240.|
+|NETWORKS IN USE|string|Reserved networks that will be excluded when allocating Sandbox networks. Should include at least the management network. The syntax is comma separated CIDRs. For example: 10.0.0.0/24, 10.1.0.0/16, 172.31.0.0/24.|
+|INSTANCE TYPE|string|The AWS EC2 instance type. The instance type determines the CPU, memory and networking capacity of the instance. For example: t2.large.|
+|VPC MODE|lookup|Every sandbox with AWS apps deploys a VPC to AWS. This setting determines how the sandbox VPC will chose a CIDR block. In Dynamic Mode, the CIDR block is chosen by Cloudshell Server. In Static Mode, the CIDR block for all sandboxes allocated will be taken from VPC CIDR attribute on AWS cloud provider.|
+|STATIC VPC CIDR|string|The CIDR used for sandbox VPC when __VPC Mode__ is __Static__.|
+|SHARED VPC ID|string|VPC ID for the Shared VPC Mode|
+|TRANSIT GATEWAY ID|string|Transit Gateway ID|
+|ADDITIONAL MANAGEMENT NETWORKS|string|Additional Management Networks. Example: "10.0.1.0/24,10.0.3.0/24"|
+|VPN GATEWAY ID|string|VGW ID|
+|VPN CIDR|string|VGW CIDRs. Example: "10.1.0.0/24,10.3.0.0/16"|
   
   6. Click **Continue**.
 
 CloudShell will validate the provided settings and create the new resource.
 
-_**in order to us the Kubernetes Cloud Provider Shell 2G Shell you must create an appropriate App template, which would be deployed as part of the sandbox reservation. For details on app templates, see the following CloudShell Help article: [Applications' Typical Workflow](https://help.quali.com/Online%20Help/0.0/Portal/Content/CSP/MNG/Mng-Apps.htm?Highlight=App#Adding)
-
-for information on creating Kubernetes App Templates, see [Adding a Kubernetes App Template](#adding-a-kubernetes-app-template)**_
-
-### Adding a Kubernetes App Template
-
-**To add a Kubernetes based App Template into CloudShell:**
-  1. As a Domain or System Administrator, go to Manage -- Apps
-  
-  2. Click on the **Add** button at the top of the page
-  
-  3. Choose the **Kubernetes Service** deployment option, fill in the app name and click **Create**
-  
-  4. Fill in the app's description, image and categories and click on **Deployment Paths** on the left side
-  
-  5. Under the **Kubernetes Service** deployment option, fill in the following details:
-
-|Attribute Name|Data Type|Description|
-|:---|:---|:---|
-|Image Name|String|The name of the container image to use for creating the container. Image must exist in the image repository used by the cluster.|
-|Image Tag|String|**(Optional)** The container image tag (usually represents the image version).|
-|Internal Ports|String|**(Optional)** The ports required by the application for internal communications.|
-|External Ports|String|Comma-separated list of the TCP ports required by the application for external communications (outside the cluster). For example: "34,161,15"|
-|Replicas|Integer|The number of container instances that will be deployed. Default is 1.|
-|Start Command|String|**(Optional)** Replace the default start command for executing the container.|
-|Environment Variables|String|**(Optional)** Comma separated list of 'key=value' environment variables that will be defined in the container.|
-|Wait for Replicas|Integer|Wait X number of seconds during power on for all replicas to be in ready state. When the value is zero or less the shell will not wait for replicas to be ready. Default is 120.|
-|CPU Request|String|**(Optional)** The requested CPU for each container. Fractional requests are also allowed. For example '0.5'. Optional unless any resource request or limit is specified.|
-|RAM Request|String|**(Optional)** The requested RAM for each container. Memory is measured in bytes. Memory is expressed as a plain integer or as a fixed-point integer using one of these suffixes - E, P, T, G, M, K. You can also use the power-of-two equivalents - Ei, Pi, Ti, Gi, Mi, Ki. For example, '256M'.|
-|CPU Limit|String|**(Optional)** The CPU limit for each container. Fractional limits are also allowed. For example '0.5'.|
-|RAM Limit|String|**(Optional)** The RAM limit for each container. Memory is measured in bytes. Memory is expressed as a plain integer or as a fixed-point integer using one of these suffixes - E, P, T, G, M, K. You can also use the power-of-two equivalents - Ei, Pi, Ti, Gi, Mi, Ki. For example, '256M'.|
+_**in order to use the Amazon AWS Cloud Provider Shell 2G Shell you must create an appropriate App template, which will be deployed as part of the sandbox reservation. For details on app templates, see the following CloudShell Help article: [Add an AWS EC2 App Template](https://help.quali.com/Online%20Help/0.0/Portal/Content/Admn/VPC-AWS-App.htm)
 
 # Updating Python Dependencies for Shells
 This section explains how to update your Python dependencies folder. This is required when you upgrade a shell that uses new/updated dependencies. It applies to both online and offline dependencies.
