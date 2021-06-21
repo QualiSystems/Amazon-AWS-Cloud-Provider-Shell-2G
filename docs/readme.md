@@ -118,7 +118,7 @@ This section describes how to import the Amazon AWS Cloud Provider Shell 2G shel
   
   4. In the dialog box, navigate to the shell's zip package, select it and click **Open**. 
 
-<br><br>The shell is displayed in the **Shells** page and can be used by domain administrators in all CloudShell domains to create new inventory resources, as explained in [Adding Inventory Resources](http://help.quali.com/Online%20Help/9.0/Portal/Content/CSP/INVN/Add-Rsrc-Tmplt.htm?Highlight=adding%20inventory%20resources). 
+<br>The shell is displayed in the **Shells** page and can be used by domain administrators in all CloudShell domains to create new inventory resources, as explained in [Adding Inventory Resources](http://help.quali.com/Online%20Help/9.0/Portal/Content/CSP/INVN/Add-Rsrc-Tmplt.htm?Highlight=adding%20inventory%20resources). 
 
 ### Offline installation of a shell
 **Note:** Offline installation instructions are relevant only if the CloudShell Execution Server has no access to PyPi.org. You can skip this section if your execution server has access to PyPi.org. For additional information, see the online help topic on offline dependencies.
@@ -158,22 +158,21 @@ This section explains how to create a new Cloud Provider Resource using the shel
   4. Click **Create**.
   
   5. In the **Resource** dialog box, enter the following attributes with data from step 1:
-|:---|:---|:---|
-|Region|Lookup|The public cloud region to be used by this cloud provider resource.|
-|AWS MGMT SG ID|string|The Management VPC's security group. Will be used to configure the communication between the Management VPC's instances and the Sandbox instances. For example sg-0d104876.|
-|AWS MGMT VPC ID|string|The Management VPC ID. Will be used to configure the communication between the Management VPC and the Sandbox VPC. For example vpc-633fb904.|
-|KEYPARIS LOCATION|string|The name of an S3 bucket in which PEM files will be located. Each active Sandbox will have a PEM file under a designated folder. For example: sandbox-management.|
-|MAX STORAGE SIZE|numeric|The max number of GiB of the root volume. Must be greater than zero or the size of the snapshot used. If kept empty the default size of the snapshot will be used. For example 8.|
-|MAX STORAGE IOPS|numeric|The max number of I/O operations per second that the volume can support. For Provisioned IOPS (SSD) volumes, you can provision up to 30 IOPS per GiB. If left empty the default in the AMI will be used. For example 240.|
-|NETWORKS IN USE|string|Reserved networks that will be excluded when allocating Sandbox networks. Should include at least the management network. The syntax is comma separated CIDRs. For example: 10.0.0.0/24, 10.1.0.0/16, 172.31.0.0/24.|
-|INSTANCE TYPE|string|The AWS EC2 instance type. The instance type determines the CPU, memory and networking capacity of the instance. For example: t2.large.|
-|VPC MODE|lookup|Every sandbox with AWS apps deploys a VPC to AWS. This setting determines how the sandbox VPC will chose a CIDR block. In Dynamic Mode, the CIDR block is chosen by Cloudshell Server. In Static Mode, the CIDR block for all sandboxes allocated will be taken from VPC CIDR attribute on AWS cloud provider.|
-|STATIC VPC CIDR|string|The CIDR used for sandbox VPC when __VPC Mode__ is __Static__.|
-|SHARED VPC ID|string|VPC ID for the Shared VPC Mode|
-|TRANSIT GATEWAY ID|string|Transit Gateway ID|
-|ADDITIONAL MANAGEMENT NETWORKS|string|Additional Management Networks. Example: "10.0.1.0/24,10.0.3.0/24"|
-|VPN GATEWAY ID|string|VGW ID|
-|VPN CIDR|string|VGW CIDRs. Example: "10.1.0.0/24,10.3.0.0/16"|
+     - __Region__: The public cloud region to be used by this cloud provider resource.
+     - __AWS MGMT SG ID__: The Management VPC's security group. Will be used to configure the communication between the Management VPC's instances and the Sandbox instances. For example sg-0d104876.
+     - __AWS MGMT VPC ID__: The Management VPC ID. Will be used to configure the communication between the Management VPC and the Sandbox VPC. For example vpc-633fb904.
+     - __KEYPARIS LOCATION__: The name of an S3 bucket in which PEM files will be located. Each active Sandbox will have a PEM file under a designated folder. For example: sandbox-management.
+     - __MAX STORAGE SIZE__: The max number of GiB of the root volume. Must be greater than zero or the size of the snapshot used. If kept empty the default size of the snapshot will be used. For example 8.
+     - __MAX STORAGE IOPS__: The max number of I/O operations per second that the volume can support. For Provisioned IOPS (SSD) volumes, you can provision up to 30 IOPS per GiB. If left empty the default in the AMI will be used. For example 240.
+     - __NETWORKS IN USE__: Reserved networks that will be excluded when allocating Sandbox networks. Should include at least the management network. The syntax is comma separated CIDRs. For example: 10.0.0.0/24, 10.1.0.0/16, 172.31.0.0/24.
+     - __INSTANCE TYPE__: The AWS EC2 instance type. The instance type determines the CPU, memory and networking capacity of the instance. For example: t2.large.
+     - __VPC MODE__: Every sandbox with AWS apps deploys a VPC to AWS. This setting determines how the sandbox VPC will chose a CIDR block. In Dynamic Mode, the CIDR block is chosen by Cloudshell Server. In Static Mode, the CIDR block for all sandboxes allocated will be taken from VPC CIDR attribute on AWS cloud provider.
+     - __STATIC VPC CIDR__: The CIDR used for sandbox VPC when __VPC Mode__ is __Static__.
+     - __SHARED VPC ID__: VPC ID for the Shared VPC Mode
+     - __TRANSIT GATEWAY ID__: Transit Gateway ID
+     - __ADDITIONAL MANAGEMENT NETWORKS__: Additional Management Networks. Example: "10.0.1.0/24,10.0.3.0/24"
+     - __VPN GATEWAY ID__: VGW ID
+     - __VPN CIDR__: VGW CIDRs. Example: "10.1.0.0/24,10.3.0.0/16"
   
   6. Click **Continue**.
 
