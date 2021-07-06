@@ -29,9 +29,7 @@ CloudShell Cloud Providers shells provide the ability to provision Apps on a vir
 The Apps can be modeled a variety of types of services, depending on the Cloud Provider, including VMs, Containers, or Emulated instances.  
 
 ### Amazon AWS Cloud Provider Shell 2G
-Amazong AWS Cloud Provider Shell 2G provides you with app deployment and management capabilities on AWS EC2.
-
-The shell supports connection to a AWS EC2.  
+Amazong AWS Cloud Provider Shell 2G provides you with app deployment and management capabilities on AWS EC2. This includes the capability to deploy, manage and tear down  AWS infrastructure as part of CloudShell sandboxes, including virtual networks, subnets, EC2 instances and security groups.
 
 For more information on AWS, see the vendor's official product documentation.
 
@@ -63,20 +61,21 @@ The following table describes attributes that are unique to this shell and are n
 |Attribute Name|Data Type|Description|
 |:---|:---|:---|
 |Region|Lookup|The public cloud region to be used by this cloud provider resource.|
-|AWS MGMT SG ID|string|The Management VPC's security group. Will be used to configure the communication between the Management VPC's instances and the Sandbox instances. For example sg-0d104876.|
-|AWS MGMT VPC ID|string|The Management VPC ID. Will be used to configure the communication between the Management VPC and the Sandbox VPC. For example vpc-633fb904.|
-|KEYPARIS LOCATION|string|The name of an S3 bucket in which PEM files will be located. Each active Sandbox will have a PEM file under a designated folder. For example: sandbox-management.|
+|AWS MGMT SG ID|string|The Management VPC's security group. Use the __SG1id__ output when configuring the Management VPC for the region. For example, "sg-71240198". This value is used by the Setup process to configure the communication between the Management VPC's instances and the Sandbox instances.|
+|AWS MGMT VPC ID|string|ID of the Management VPC. Used by the Setup process to set up the VPC and subnet for the sandbox. Use the __ManagementVPCID__ output when configuring the Management VPC for the region. For example “vpc-633fb904”.|
+|KEYPAIRS LOCATION|string|The name of an S3 bucket in which PEM files will be located. Each active Sandbox will have a PEM file under a designated folder.  <br>Use the __S3Name__ output when configuring the Management VPC for the region. For example: "sandbox-management".|
 |MAX STORAGE SIZE|numeric|The max number of GiB of the root volume. Must be greater than zero or the size of the snapshot used. If kept empty the default size of the snapshot will be used. For example 8.|
 |MAX STORAGE IOPS|numeric|The max number of I/O operations per second that the volume can support. For Provisioned IOPS (SSD) volumes, you can provision up to 30 IOPS per GiB. If left empty the default in the AMI will be used. For example 240.|
 |NETWORKS IN USE|string|Reserved networks that will be excluded when allocating Sandbox networks. Should include at least the management network. The syntax is comma separated CIDRs. For example: 10.0.0.0/24, 10.1.0.0/16, 172.31.0.0/24.|
-|INSTANCE TYPE|string|The AWS EC2 instance type. The instance type determines the CPU, memory and networking capacity of the instance. For example: t2.large.|
-|VPC MODE|lookup|Every sandbox with AWS apps deploys a VPC to AWS. This setting determines how the sandbox VPC will chose a CIDR block. In Dynamic Mode, the CIDR block is chosen by Cloudshell Server. In Static Mode, the CIDR block for all sandboxes allocated will be taken from VPC CIDR attribute on AWS cloud provider.|
+|INSTANCE TYPE|string|The AWS EC2 instance type. The instance type determines the CPU, memory and networking capacity of the instance. For example: "t2.large".|
+|VPC MODE|lookup|Every sandbox with AWS apps deploys a VPC to AWS. This setting determines how the sandbox VPC will chose a CIDR block. In __Dynamic__ mode, the CIDR block is chosen by Cloudshell Server. In __Static__ mode, the CIDR block for all sandboxes allocated will be taken from VPC CIDR attribute on AWS cloud provider. In __Shared__ mode, the shared VPC is created with a pre-defined CIDR block.|
 |STATIC VPC CIDR|string|The CIDR used for sandbox VPC when __VPC Mode__ is __Static__.|
-|SHARED VPC ID|string|VPC ID for the Shared VPC Mode|
-|TRANSIT GATEWAY ID|string|Transit Gateway ID|
-|ADDITIONAL MANAGEMENT NETWORKS|string|Additional Management Networks. Example: "10.0.1.0/24,10.0.3.0/24"|
-|VPN GATEWAY ID|string|VGW ID|
-|VPN CIDR|string|VGW CIDRs. Example: "10.1.0.0/24,10.3.0.0/16"|
+|SHARED VPC ID|string|V(Mandatory for Shared VPC mode) Shared VPC’s ID. For example: “vpc-0bf24b1ebrd855e30”.|
+|Shared VPC Role ARN| string|(Mandatory for Shared VPC mode) Role created by the CloudFormation process with read/write permissions in the AWS account. This role is used by CloudShell to operate in the shared VPC. To find the role, open the main CloudFormation stack, click the __Outputs__ tab and copy the __SharedRoleARN__.|
+|TRANSIT GATEWAY ID|string|(Mandatory for Shared VPC mode) ID of the transit gateway. To find the transit gateway id, open the CloudFormation stack that has “VPCNAT” in its name, click the __Outputs__ tab and copy the __TGWid__ value.|
+|ADDITIONAL MANAGEMENT NETWORKS|string|Networks to be allowed to interact with all sandboxes. This is used for allowing connectivity to AWS resources outside the Management VPC. The syntax is comma separated CIDRs. For example, "10.0.0.0/24,10.1.0.0/16,172.31.0.0/24".|
+|VPN GATEWAY ID|string|(Mandatory for Shared VPC mode) ID of the gateway to use. Leave empty if the __UseTransitGateway__ attribute was enabled in the CloudFormation, specify the VPN gateway ID if the attribute was set to “False”. To find the VPN gateway ID, open the CloudFormation stack that has “VPCNAT” in its name, click the __Outputs__ tab and copy the __VPNGWid__ value.|
+|VPN CIDR|string|(Mandatory for Shared VPC mode if VPN Gateway ID is defined) Comma-separated list of CIDRs in the local network to be used to VPN to the shared VPC. For example: "10.1.0.0/24,10.3.0.0/16".|
 
 
 ### Automation
@@ -89,6 +88,8 @@ For detailed information on each available commands, see the following section o
 
 [Common Cloud Provider Commands](https://github.com/QualiSystems/cloudshell-standards/blob/master/Documentation/cloud_provider_standard.md#commands)
 
+# AWS Integration Process
+In order to integrate CloudShell with AWS, you need to first deploy the CloudShell management and sandbox VPCs on your AWS region. This is done using CloudFormation templates that define the VPC deployment type (dedicated VPCs per sandbox or shared VPCs in which the sandbox subnets are deployed and managed), the connection to your Quali Server and more. Additional steps are required, such as configuring the integration's management instances and creating App templates which include the definition of the instances to deploy, image and configuration management to be performed on the deployed instances. For details, see CloudShell Help's [AWS Integration](https://help.quali.com/Online%20Help/0.0/Portal/Content/Admn/VPC-Ovrv.htm) chapter. 
 
 # Downloading the Shell
 The Amazon AWS Cloud Provider Shell 2G shell is available from the [Quali Community Integrations](https://community.quali.com/integrations) page. 
@@ -159,20 +160,27 @@ This section explains how to create a new Cloud Provider Resource using the shel
   
   5. In the **Resource** dialog box, enter the following attributes with data from step 1:
      - __Region__: The public cloud region to be used by this cloud provider resource.
-     - __AWS MGMT SG ID__: The Management VPC's security group. Will be used to configure the communication between the Management VPC's instances and the Sandbox instances. For example sg-0d104876.
-     - __AWS MGMT VPC ID__: The Management VPC ID. Will be used to configure the communication between the Management VPC and the Sandbox VPC. For example vpc-633fb904.
-     - __KEYPARIS LOCATION__: The name of an S3 bucket in which PEM files will be located. Each active Sandbox will have a PEM file under a designated folder. For example: sandbox-management.
+     - __AWS MGMT SG ID__: The Management VPC's security group. Use the __SG1id__ output when configuring the Management VPC for the region. For example, "sg-71240198".
+<br>This value is used by the Setup process to configure the communication between the Management VPC's instances and the Sandbox instances.
+     - __AWS MGMT VPC ID__: ID of the Management VPC. Used by the Setup process to set up the VPC and subnet for the sandbox.
+     <br>Use the __ManagementVPCID__ output when configuring the Management VPC for the region. For example “vpc-633fb904”.
+     - __KEYPAIRS LOCATION__: The name of an S3 bucket in which PEM files will be located. Each active Sandbox will have a PEM file under a designated folder.  <br>Use the __S3Name__ output when configuring the Management VPC for the region. For example: "sandbox-management".
      - __MAX STORAGE SIZE__: The max number of GiB of the root volume. Must be greater than zero or the size of the snapshot used. If kept empty the default size of the snapshot will be used. For example 8.
      - __MAX STORAGE IOPS__: The max number of I/O operations per second that the volume can support. For Provisioned IOPS (SSD) volumes, you can provision up to 30 IOPS per GiB. If left empty the default in the AMI will be used. For example 240.
      - __NETWORKS IN USE__: Reserved networks that will be excluded when allocating Sandbox networks. Should include at least the management network. The syntax is comma separated CIDRs. For example: 10.0.0.0/24, 10.1.0.0/16, 172.31.0.0/24.
      - __INSTANCE TYPE__: The AWS EC2 instance type. The instance type determines the CPU, memory and networking capacity of the instance. For example: t2.large.
-     - __VPC MODE__: Every sandbox with AWS apps deploys a VPC to AWS. This setting determines how the sandbox VPC will chose a CIDR block. In Dynamic Mode, the CIDR block is chosen by Cloudshell Server. In Static Mode, the CIDR block for all sandboxes allocated will be taken from VPC CIDR attribute on AWS cloud provider.
+     - __VPC MODE__: Every sandbox with AWS apps deploys a VPC to AWS. This setting determines how the sandbox VPC will chose a CIDR block. Options are:
+        - __Dynamic__: The CIDR block is chosen by Cloudshell Server. In other words, CloudShell deploys a new VPC with a dedicated CIDR for every sandbox.
+        - __Static__: The CIDR block for all sandboxes allocated will be taken from VPC CIDR attribute on AWS cloud provider.
+        - __Shared__: (Mandatory for Shared VPC mode) The shared VPC is created with a pre-defined CIDR block.
      - __STATIC VPC CIDR__: The CIDR used for sandbox VPC when __VPC Mode__ is __Static__.
-     - __SHARED VPC ID__: VPC ID for the Shared VPC Mode
-     - __TRANSIT GATEWAY ID__: Transit Gateway ID
-     - __ADDITIONAL MANAGEMENT NETWORKS__: Additional Management Networks. Example: "10.0.1.0/24,10.0.3.0/24"
-     - __VPN GATEWAY ID__: VGW ID
-     - __VPN CIDR__: VGW CIDRs. Example: "10.1.0.0/24,10.3.0.0/16"
+     - __SHARED VPC ID__: (Mandatory for Shared VPC mode) Shared VPC’s ID. For example: “vpc-0bf24b1ebrd855e30”.
+     - __Shared VPC Role ARN__: (Mandatory for Shared VPC mode) Role created by the CloudFormation process with read/write permissions in the AWS account. This role is used by CloudShell to operate in the shared VPC. To find the role, open the main CloudFormation stack, click the __Outputs__ tab and copy the __SharedRoleARN__.
+     - __TRANSIT GATEWAY ID__: (Mandatory for Shared VPC mode) ID of the transit gateway. To find the transit gateway id, open the CloudFormation stack that has “VPCNAT” in its name, click the __Outputs__ tab and copy the __TGWid__ value.
+     - __ADDITIONAL MANAGEMENT NETWORKS__: Networks to be allowed to interact with all sandboxes. This is used for allowing connectivity to AWS resources outside the Management VPC. 
+<br>The syntax is comma separated CIDRs. For example, "10.0.0.0/24,10.1.0.0/16,172.31.0.0/24".
+     - __VPN GATEWAY ID__: (Mandatory for Shared VPC mode) ID of the gateway to use. Leave empty if the __UseTransitGateway__ attribute was enabled in the CloudFormation, specify the VPN gateway ID if the attribute was set to “False”. To find the VPN gateway ID, open the CloudFormation stack that has “VPCNAT” in its name, click the __Outputs__ tab and copy the __VPNGWid__ value.
+     - __VPN CIDR__: (Mandatory for Shared VPC mode if VPN Gateway ID is defined) Comma-separated list of CIDRs in the local network to be used to VPN to the shared VPC. For example: "10.1.0.0/24,10.3.0.0/16".
   
   6. Click **Continue**.
 
