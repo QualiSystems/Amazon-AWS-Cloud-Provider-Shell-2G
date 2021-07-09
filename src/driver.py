@@ -22,7 +22,7 @@ class AmazonAwsCloudProviderShell2GDriver(ResourceDriverInterface):
         self.request_parser.add_deployment_model(
             deployment_model_cls=DeployAWSEc2AMIInstanceResourceModel
         )
-        deploy_name = "Amazon AWS Cloud Provider Shell 2G.Amazon AWS EC2 Instance 2G"
+        deploy_name = "Amazon AWS Cloud Provider 2G.Amazon AWS EC2 Instance 2G"
         self.deployments = {deploy_name: self.deploy_ami}
 
     def initialize(self, context):

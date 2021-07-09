@@ -3,7 +3,7 @@ tosca_definitions_version: tosca_simple_yaml_1_0
 metadata:
   template_name: Amazon AWS Cloud Provider Shell 2G
   template_author: Quali
-  template_version: 1.0.0
+  template_version: 1.0.2
   template_icon: AWS.png
 
 description: >
@@ -14,7 +14,7 @@ imports:
   - cloudshell_standard: cloudshell_cloud_provider_standard_1_0_0.yaml
 
 node_types:
- vendor.resource.Amazon AWS Cloud Provider Shell 2G:
+ vendor.resource.Amazon AWS Cloud Provider 2G:
     derived_from: cloudshell.nodes.CustomCloudProvider
     properties:
       Region:
@@ -90,6 +90,10 @@ node_types:
         type: string
         default: ""
         description: "VPC ID for the Shared VPC Mode"
+      Shared VPC Role Arn:
+        type: string
+        default: ""
+        description: "Shared VPC Role Arn"
       AWS Secret Access Key:
         type: cloudshell.datatypes.Password
         default: ""
@@ -213,6 +217,10 @@ node_types:
             type: string
             default: ""
             description: "VPC ID for the Shared VPC Mode"
+          Shared VPC Role Arn:
+            type: string
+            default: ""
+            description: "Shared VPC Role Arn"
           Transit Gateway ID:
             type: string
             default: ""
