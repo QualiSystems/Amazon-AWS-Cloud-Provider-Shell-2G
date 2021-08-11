@@ -68,7 +68,7 @@ The following table describes attributes that are unique to this shell and are n
 |MAX STORAGE IOPS|numeric|The max number of I/O operations per second that the volume can support. For Provisioned IOPS (SSD) volumes, you can provision up to 30 IOPS per GiB. If left empty the default in the AMI will be used. For example 240.|
 |NETWORKS IN USE|string|Reserved networks that will be excluded when allocating Sandbox networks. Should include at least the management network. The syntax is comma separated CIDRs. For example: 10.0.0.0/24, 10.1.0.0/16, 172.31.0.0/24.|
 |INSTANCE TYPE|string|The AWS EC2 instance type. The instance type determines the CPU, memory and networking capacity of the instance. For example: "t2.large".|
-|VPC MODE|lookup|Every sandbox with AWS apps deploys a VPC to AWS. This setting determines how the sandbox VPC will chose a CIDR block. In __DYNAMIC__ mode, the CIDR block is chosen by Cloudshell Server. In __STATIC__ mode, the CIDR block for all sandboxes allocated will be taken from VPC CIDR attribute on AWS cloud provider. In __SHARED__ mode, the shared VPC is created with a pre-defined CIDR block.|
+|VPC MODE|lookup|Every sandbox with AWS apps deploys a VPC to AWS. This setting determines how the sandbox VPC will chose a CIDR block. In __DYNAMIC__ mode, the CIDR block is chosen by Cloudshell Server. In __STATIC__ mode, the CIDR block for all sandboxes allocated will be taken from VPC CIDR attribute on AWS cloud provider. Select __SHARED__ to indicate that the cloud provider resource will deploy to the shared VPC defined in __Shared VPC ID__.|
 |STATIC VPC CIDR|string|The CIDR used for sandbox VPC when __VPC MODE__ is __STATIC__.|
 |SHARED VPC ID|string|V(Mandatory for Shared VPC mode) Shared VPC’s ID. For example: “vpc-0bf24b1ebrd855e30”.|
 |Shared VPC Role ARN| string|(Mandatory for Shared VPC mode) Role created by the CloudFormation process with read/write permissions in the AWS account. This role is used by CloudShell to operate in the shared VPC. To find the role, open the main CloudFormation stack, click the __Outputs__ tab and copy the __SharedRoleARN__.|
@@ -172,14 +172,14 @@ This section explains how to create a new Cloud Provider Resource using the shel
      - __VPC MODE__: Every sandbox with AWS apps deploys a VPC to AWS. This setting determines how the sandbox VPC will chose a CIDR block. Options are:
         - __DYNAMIC__: The CIDR block is chosen by Cloudshell Server. In other words, CloudShell deploys a new VPC with a dedicated CIDR for every sandbox.
         - __STATIC__: The CIDR block for all sandboxes allocated will be taken from VPC CIDR attribute on AWS cloud provider.
-        - __SHARED__: (Mandatory for Shared VPC mode) The shared VPC is created with a pre-defined CIDR block.
+        - __SHARED__: Indicates that the cloud provider resource will deploy to the shared VPC defined in __Shared VPC ID__.
      - __STATIC VPC CIDR__: The CIDR used for sandbox VPC when __VPC Mode__ is __Static__.
      - __SHARED VPC ID__: (Mandatory for Shared VPC mode) Shared VPC’s ID. For example: “vpc-0bf24b1ebrd855e30”.
      - __SHARED VPC ROLE ARN__: (Mandatory for Shared VPC mode) Role created by the CloudFormation process with read/write permissions in the AWS account. This role is used by CloudShell to operate in the shared VPC. To find the role, open the main CloudFormation stack, click the __Outputs__ tab and copy the __SharedRoleARN__.
      - __TRANSIT GATEWAY ID__: (Mandatory for Shared VPC mode) ID of the transit gateway. To find the transit gateway id, open the CloudFormation stack that has “VPCNAT” in its name, click the __Outputs__ tab and copy the __TGWid__ value.
      - __ADDITIONAL MANAGEMENT NETWORKS__: Networks to be allowed to interact with all sandboxes. This is used for allowing connectivity to AWS resources outside the Management VPC. 
 <br>The syntax is comma separated CIDRs. For example, "10.0.0.0/24,10.1.0.0/16,172.31.0.0/24".
-     - __VPN GATEWAY ID__: (Mandatory for Shared VPC mode) ID of the gateway to use. Leave empty if the __UseTransitGateway__ attribute was enabled in the CloudFormation, specify the VPN gateway ID if the attribute was set to “False”. To find the VPN gateway ID, open the shared VPC's CloudFormation stack, click the __Outputs__ tab and copy the __VPNGWid__ value.
+     - __VPN GATEWAY ID__: (Mandatory for Shared VPC mode) ID of the gateway to use. Required to connect the shared VPC's sandbox subnets to the VPN gateway. CloudShell does this by creating a route between the specified VPN gateway and the connected subnet within the VPC CIDR. To find the role, open the shared VPC CloudFormation stack, click the __Outputs__ tab and copy the __VPNGWid__ value.
      - __VPN CIDR__: (Mandatory for Shared VPC mode if VPN Gateway ID is defined) Comma-separated list of CIDRs in the local network to be used to VPN to the shared VPC. For example: "10.1.0.0/24,10.3.0.0/16".
   
   6. Click **Continue**.
