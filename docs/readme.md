@@ -26,10 +26,10 @@ A shell consists of a data model that defines how the device or service and its 
 ### Cloud Provider Shells
 CloudShell Cloud Providers shells provide the ability to provision Apps on a virtualization platform or a service provider platform.
 
-The Apps can be modeled a variety of types of services, depending on the Cloud Provider, including VMs, Containers, or Emulated instances.  
+The Apps can be modeled on a variety of types of services, depending on the Cloud Provider, including VMs, Containers, or Emulated instances.  
 
 ### Amazon AWS Cloud Provider Shell 2G
-Amazong AWS Cloud Provider Shell 2G provides you with app deployment and management capabilities on AWS EC2. This includes the capability to deploy, manage and tear down  AWS infrastructure as part of CloudShell sandboxes, including virtual networks, subnets, EC2 instances and security groups.
+Amazon AWS Cloud Provider Shell 2G provides you with app deployment and management capabilities on AWS EC2. This includes the capability to deploy, manage and tear down  AWS infrastructure as part of CloudShell sandboxes, including virtual networks, subnets, EC2 instances and security groups.
 
 For more information on AWS, see the vendor's official product documentation.
 
@@ -40,7 +40,7 @@ For detailed information about the shell’s structure and attributes, see the [
 
 ### Requirements
 
-Release: AMazong AWS Cloud Provider Shell 2G
+Release: Amazon AWS Cloud Provider Shell 2G
 
 ▪ CloudShell version **9.3 and above**
 
