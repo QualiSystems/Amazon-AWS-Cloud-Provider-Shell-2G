@@ -144,6 +144,20 @@ node_types:
         CIDR to the requested static private IP.
         Example: {'10.0.0.0/28': '10.0.0.6'}"
         tags: [ user_input ]
+      Enable Source Dest Check:
+        type: boolean
+        default: true
+        description: "Indicates whether source/destination checking is enabled. A value
+        of true means checking is enabled, and false means checking is disabled. This
+        value must be false for Virtual Appliance instances like virtual
+        firewalls/routers."
+        tags: [ user_input ]
+      Status Check Timeout:
+        type: integer
+        default: 0
+        description: "Timeout in seconds for AWS status checks to pass. If set to 0 then
+        the default timeout will be used."
+        tags: [ user_input ]
     artifacts:
       icon:
         file: DeploymentTypes-AWS-EC2.png
