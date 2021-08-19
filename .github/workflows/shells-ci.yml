@@ -75,13 +75,15 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-      - name: Check shell is not in Shell name
+      - name: get Node Type
+        id: getNodeType
         uses: mikefarah/yq@master
         with:
-          cmd: |
-            NODE_TYPE=`yq e ".node_types | keys | .[0]" shell-definition.yaml`
-            SHELL_NAME=`echo ${NODE_TYPE:16} | tr "[:upper:]" "[:lower:]"`
-            echo $SHELL_NAME
+          cmd: yq e ".node_types | keys | .[0]" shell-definition.yaml
+      - name: Check shell is not in the Shell name
+        run: |
+          SHELL_NAME=`echo ${{ steps.getNodeType.outputs.result }} | tr "[:upper:]" "[:lower:]"`
+          echo $SHELL_NAME
   create-gh-release:
     needs: [pre-commit, pack]
     if: ${{ github.ref == 'refs/heads/master' && github.event_name == 'push' }}
