@@ -81,7 +81,7 @@ jobs:
           cmd: |
             NODE_TYPE=`yq e ".node_types | keys | .[0]" shell-definition.yaml`
             SHELL_NAME=`echo ${NODE_TYPE:16} | tr "[:upper:]" "[:lower:]"`
-            [[ $SHELL_NAME =~ ".+ shell .+" ]] && echo "'Shell' should not be in the Shell name" && exit 1
+            [[ $SHELL_NAME =~ ".+ shell .+" ]] && exit 1
   create-gh-release:
     needs: [pre-commit, pack]
     if: ${{ github.ref == 'refs/heads/master' && github.event_name == 'push' }}
