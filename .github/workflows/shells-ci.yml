@@ -74,7 +74,7 @@ jobs:
           cmd: yq e ".metadata.template_version" tmp.yaml
       - name: Check version
         run: |
-          ! diff <("${{ steps.currentVersion.outputs.result }}") <("${{ steps.masterVersion.outputs.result }}")
+          ! diff <(echo "${{ steps.currentVersion.outputs.result }}") <(echo "${{ steps.masterVersion.outputs.result }}")
   check-not-shell-in-shell-name:
     name: Check "Shell" is not in the Shell name
     runs-on: ubuntu-latest
