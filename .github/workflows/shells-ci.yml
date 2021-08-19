@@ -2,11 +2,11 @@ name: CI
 
 on:
   push:
-    branches:
-      - "*"
+    paths-ignore:
+      - "README.md"
   pull_request:
-    branches:
-      - "*"
+    paths-ignore:
+      - "README.md"
   release:
     types: [published]
 
