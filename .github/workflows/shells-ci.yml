@@ -69,6 +69,19 @@ jobs:
           cd ${{ github.repository }}
           git checkout -qf ${{ github.head_ref }}
           ! diff <(yq .metadata.template_version shell-definition.yaml) <(git show master:shell-definition.yaml > tmp.yaml && yq .metadata.template_version tmp.yaml)
+  check-not-shell-in-shell-name:
+    name: Check "Shell" is not in the Shell name
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Check shell is not in Shell name
+        uses: mikefarah/yq@master
+        with:
+          cmd: |
+            NODE_TYPE=`yq e ".node_types | keys | .[0]" shell-definition.yaml`
+            SHELL_NAME=`echo ${NODE_TYPE:16} | tr "[:upper:]" "[:lower:]"`
+            [[ $SHELL_NAME =~ ".+ shell .+" ]] && echo "'Shell' should not be in the Shell name" && exit 1
   create-gh-release:
     needs: [pre-commit, pack]
     if: ${{ github.ref == 'refs/heads/master' && github.event_name == 'push' }}
