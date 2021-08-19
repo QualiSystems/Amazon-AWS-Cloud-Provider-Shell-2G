@@ -82,7 +82,8 @@ jobs:
           cmd: yq e ".node_types | keys | .[0]" shell-definition.yaml
       - name: Check shell is not in the Shell name
         run: |
-          SHELL_NAME=`echo ${{ steps.getNodeType.outputs.result }} | tr "[:upper:]" "[:lower:]"`
+          NODE_TYPE="${{ steps.getNodeType.outputs.result }}"
+          SHELL_NAME=`echo ${NODE_TYPE:16} | tr "[:upper:]" "[:lower:]"`
           echo $SHELL_NAME
   create-gh-release:
     needs: [pre-commit, pack]
