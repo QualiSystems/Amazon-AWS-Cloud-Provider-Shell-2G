@@ -84,7 +84,7 @@ jobs:
         run: |
           NODE_TYPE="${{ steps.getNodeType.outputs.result }}"
           SHELL_NAME=`echo ${NODE_TYPE:16} | tr "[:upper:]" "[:lower:]"`
-          [[ $SHELL_NAME == *" shell "* ]] && exit 1
+          [[ $SHELL_NAME == *" shell "* ]] && echo "You should remove 'Shell' from the Shell name" exit 1
   create-gh-release:
     needs: [pre-commit, pack]
     if: ${{ github.ref == 'refs/heads/master' && github.event_name == 'push' }}
