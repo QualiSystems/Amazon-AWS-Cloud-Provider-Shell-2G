@@ -14,7 +14,7 @@ imports:
   - cloudshell_standard: cloudshell_cloud_provider_standard_1_0_0.yaml
 
 node_types:
- vendor.resource.Amazon AWS Cloud Provider Shell 2G:
+ vendor.resource.Amazon AWS Cloud Provider 2G:
     derived_from: cloudshell.nodes.CustomCloudProvider
     properties:
       Region:
