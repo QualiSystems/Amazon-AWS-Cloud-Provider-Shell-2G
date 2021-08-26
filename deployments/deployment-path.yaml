@@ -3,7 +3,7 @@ tosca_definitions_version: tosca_simple_yaml_1_0
 metadata:
   template_name: AmazonAWSCloudProviderShell2G
   template_author: Quali
-  template_version: 1.0.2
+  template_version: 1.1.1
   template_icon: DeploymentTypes-AWS-EC2.png
 
 description: >
@@ -147,16 +147,25 @@ node_types:
       Enable Source Dest Check:
         type: boolean
         default: true
-        description: "Indicates whether source/destination checking is enabled. A value
-        of true means checking is enabled, and false means checking is disabled. This
-        value must be false for Virtual Appliance instances like virtual
-        firewalls/routers."
+        description: "Set to True to enable source/destination checks.
+        Source/destination checks allow users to create custom routing inside the VPC.
+        It is applied to all vNICs of a certain instance. If enabled, you can
+        reconfigure routing to go through that instance. This value must be False for
+        Virtual Appliance instances like virtual firewalls/routers."
         tags: [ user_input ]
       Status Check Timeout:
         type: integer
         default: 0
-        description: "Timeout in seconds for AWS status checks to pass. If set to 0 then
-        the default timeout will be used."
+        description: "Timeout, in seconds, for AWS status checks to pass. Some virtual
+        appliances may take a while to fully deploy and AWS will show them as impaired
+        from 20 minutes until they fully deploy. Therefore, to ensure virtual appliance
+        instances are not stopped when they become impaired, use this attribute to
+        provide a long enough timeout for the instance to complete its status check.
+        The default timeout is 600 seconds (10 minutes). However, instance deployment
+        will fail once the instance status becomes 'impaired'. Specifying a status check
+        timeout period will configure CloudShell to ignore the 'impaired' status and
+        instead wait for the instance deployment to complete or the timeout period to
+         pass."
         tags: [ user_input ]
     artifacts:
       icon:
