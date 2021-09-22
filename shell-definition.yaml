@@ -98,7 +98,7 @@ node_types:
         Shared: Indicates that the cloud provider resource will deploy to the shared VPC
         defined in Shared VPC ID"
         constraints:
-          - valid_values: [ "Dynamic", "Static", "Shared" ]
+          - valid_values: [ "Dynamic", "Static", "Shared", "Single" ]
       Static VPC CIDR:
         type: string
         default: ""
@@ -257,7 +257,7 @@ node_types:
             Shared: Indicates that the cloud provider resource will deploy to the shared
             VPC defined in Shared VPC ID"
             constraints:
-              - valid_values: [ "Dynamic", "Static", "Shared" ]
+              - valid_values: [ "Dynamic", "Static", "Shared", "Single" ]
           Static VPC CIDR:
             type: string
             default: ""
