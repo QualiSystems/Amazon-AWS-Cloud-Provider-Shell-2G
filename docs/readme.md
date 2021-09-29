@@ -29,9 +29,13 @@ CloudShell Cloud Providers shells provide the ability to provision Apps on a vir
 The Apps can be modeled on a variety of types of services, depending on the Cloud Provider, including VMs, Containers, or Emulated instances.  
 
 ### Amazon AWS Cloud Provider Shell 2G
-Amazon AWS Cloud Provider Shell 2G provides you with app deployment and management capabilities on AWS EC2. This includes the capability to deploy, manage and tear down  AWS infrastructure as part of CloudShell sandboxes, including virtual networks, subnets, EC2 instances and security groups.
+Amazon AWS Cloud Provider Shell 2G provides you with app deployment and management capabilities on AWS EC2. These include: 
+* Pyhon 3.7 support
+* Capability to deploy, manage and tear down AWS infrastructure as part of CloudShell sandboxes, including virtual networks, subnets, EC2 instances and security groups
+* Option to deploy to existing shared VPC
+* Enable source destination checks
 
-For more information on AWS, see the vendor's official product documentation.
+For details, see the [Add an AWS Cloud Provider Resource](https://help.quali.com/Online%20Help/0.0/Portal/Content/Admn/VPC-AWS-Cld-Prvdr-Rsc.htm) CloudShell Help article. For more information on AWS, see the vendor's official product documentation.
 
 ### Standard version
 Amazon AWS Cloud Provider Shell 2G is based on the Cloud Provider Standard version **1.0.0**.
