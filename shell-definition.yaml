@@ -90,13 +90,15 @@ node_types:
         default: "Dynamic"
         description: "Every sandbox with AWS Apps deploys a VPC to AWS, while in Shared
         VPC mode, CloudShell deploys the sandbox to an existing VPC. This setting
-        determines how the sandbox VPC selects a CIDR block.
-        Options are: Dynamic: The CIDR block is selected by Cloudshell Server. In other
-        words, CloudShell deploys a new VPC with a dedicated CIDR for every sandbox.
-        Static: The CIDR block for all sandboxes allocated is taken from the VPC CIDR
-        attribute.
-        Shared: Indicates that the cloud provider resource will deploy to the shared VPC
-        defined in Shared VPC ID"
+        determines how the sandbox VPC selects a CIDR block. Options are:<br>
+        * Dynamic: The CIDR block is selected by Cloudshell Server. In other
+        words, CloudShell deploys a new VPC with a dedicated CIDR for every sandbox.<br>
+        * Static: The CIDR block for all sandboxes allocated is taken from the VPC CIDR
+        attribute.<br>
+        * Shared: Indicates that the cloud provider resource will deploy to the shared
+        VPC defined in Shared VPC ID and use the VPC CIDR block.<br>
+        * Single: The sandbox infrastructure will be deployed to the Management VPC and
+        use the VPC CIDR block."
         constraints:
           - valid_values: [ "Dynamic", "Static", "Shared", "Single" ]
       Static VPC CIDR:
@@ -250,12 +252,16 @@ node_types:
             description: "Every sandbox with AWS Apps deploys a VPC to AWS, while in
             Shared VPC mode, CloudShell deploys the sandbox to an existing VPC. This
             setting determines how the sandbox VPC selects a CIDR block. Options are:
-            Dynamic: The CIDR block is selected by Cloudshell Server. In other words,
-            CloudShell deploys a new VPC with a dedicated CIDR for every sandbox.
-            Static: The CIDR block for all sandboxes allocated is taken from the VPC
-            CIDR attribute.
-            Shared: Indicates that the cloud provider resource will deploy to the shared
-            VPC defined in Shared VPC ID"
+            <br>
+            * Dynamic: The CIDR block is selected by Cloudshell Server. In other
+            words, CloudShell deploys a new VPC with a dedicated CIDR for every
+            sandbox.<br>
+            * Static: The CIDR block for all sandboxes allocated is taken from the VPC
+            CIDR attribute.<br>
+            * Shared: Indicates that the cloud provider resource will deploy to the
+            shared VPC defined in Shared VPC ID and use the VPC CIDR block.<br>
+            * Single: The sandbox infrastructure will be deployed to the Management VPC
+            and use the VPC CIDR block."
             constraints:
               - valid_values: [ "Dynamic", "Static", "Shared", "Single" ]
           Static VPC CIDR:
