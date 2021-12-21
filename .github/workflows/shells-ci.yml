@@ -65,13 +65,13 @@ jobs:
       - name: Download dependencies
         run: |
           python -m pip install pip -U
-          pip download -r src/requirements.txt -d linux-dependencies
+          pip download -r src/requirements.txt -d dependencies
       - name: Upload artifacts
         uses: actions/upload-artifact@v2
         with:
           name: linux-dependencies
           path: |
-            linux-dependencies
+            dependencies
   download-windows-dependencies:
     name: Download Windows dependencies
     runs-on: windows-2019
@@ -88,13 +88,13 @@ jobs:
       - name: Download dependencies
         run: |
           python -m pip install pip -U
-          pip download -r src/requirements.txt -d windows-dependencies
+          pip download -r src/requirements.txt -d dependencies
       - name: Upload artifacts
         uses: actions/upload-artifact@v2
         with:
           name: windows-dependencies
           path: |
-            windows-dependencies
+            dependencies
   check-version:
     name: Check version
     # only for PRs in master
@@ -168,10 +168,12 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: linux-dependencies
+          path: linux-dependencies
       - name: Get Windows dependencies
         uses: actions/download-artifact@v2
         with:
           name: windows-dependencies
+          path: windows-dependencies
       - name: Set envs
         run: |
           version="$(yq -r .metadata.template_version shell-definition.yaml)"
