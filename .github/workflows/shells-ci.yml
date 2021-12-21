@@ -184,9 +184,8 @@ jobs:
           echo "REPO=$repo" >> $GITHUB_ENV
       - name: Pack dependencies
         run: |
-          ls -l
-          zip dist/cloudshell-$REPO-dependencies-win-package-$TAG.zip windows-dependencies/*
-          zip dist/cloudshell-$REPO-dependencies-linux-package-$TAG.zip linux-dependencies/*
+          zip -j dist/cloudshell-$REPO-dependencies-win-package-$TAG.zip windows-dependencies/*
+          zip -j dist/cloudshell-$REPO-dependencies-linux-package-$TAG.zip linux-dependencies/*
       - name: Create GitHub release
         uses: ncipollo/release-action@v1
         with:
