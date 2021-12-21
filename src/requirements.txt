@@ -1,5 +1,5 @@
 cloudshell-shell-core~=5.0
 cloudshell-cp-core~=1.2.0
 cloudshell-cp-aws~=3.3
-cryptography<3.3 ; python_version <= "3.7"
-cryptography>3.3 ; python_version > "3.7"
+requirements < 2.26 ; python_version <= "3.7"
+requirements >= 2.26 ; python_version > "3.7"
