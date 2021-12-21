@@ -165,11 +165,11 @@ jobs:
       - name: Get Linux dependencies
         uses: actions/download-artifact@v2
         with:
-          name: linux-dependenies
+          name: linux-dependencies
       - name: Get Windows dependencies
         uses: actions/download-artifact@v2
         with:
-          name: windows-dependenies
+          name: windows-dependencies
       - name: Set envs
         run: |
           version="$(yq -r .metadata.template_version shell-definition.yaml)"
