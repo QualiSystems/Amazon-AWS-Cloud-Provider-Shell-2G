@@ -50,6 +50,7 @@ jobs:
           TOXENV: pack
         run: tox
   download-linux-dependencies:
+    name: Download Linux dependencies
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -64,14 +65,15 @@ jobs:
       - name: Download dependencies
         run: |
           python -m pip install pip -U
-          pip download -r src/requirements.txt -d dependencies
+          pip download -r src/requirements.txt -d linux-dependencies
       - name: Upload artifacts
         uses: actions/upload-artifact@v2
         with:
           name: linux-dependencies
           path: |
-            dependencies
+            linux-dependencies
   download-windows-dependencies:
+    name: Download Windows dependencies
     runs-on: windows-2019
     strategy:
       matrix:
@@ -86,13 +88,13 @@ jobs:
       - name: Download dependencies
         run: |
           python -m pip install pip -U
-          pip download -r src/requirements.txt -d dependencies
+          pip download -r src/requirements.txt -d windows-dependencies
       - name: Upload artifacts
         uses: actions/upload-artifact@v2
         with:
           name: windows-dependencies
           path: |
-            dependencies
+            windows-dependencies
   check-version:
     name: Check version
     # only for PRs in master
@@ -180,6 +182,7 @@ jobs:
           echo "REPO=$repo" >> $GITHUB_ENV
       - name: Pack dependencies
         run: |
+          ls -l
           zip dist/cloudshell-$REPO-dependencies-win-package-$TAG.zip windows-dependencies/*
           zip dist/cloudshell-$REPO-dependencies-linux-package-$TAG.zip linux-dependencies/*
       - name: Create GitHub release
