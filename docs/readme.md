@@ -209,6 +209,20 @@ In online mode, the execution server automatically downloads and extracts the ap
 **To update online Python dependencies:**
 * If there is a live instance of the shell's driver or script, terminate the shell’s instance, as explained [here](http://help.quali.com/Online%20Help/9.0/Portal/Content/CSP/MNG/Mng-Exctn-Srv-Exct.htm#Terminat). If an instance does not exist, the execution server will download the Python dependencies the next time a command of the driver or script runs.
 
+# Typical Workflows
+
+### Configuring CloudShell to allow Static Mode in AWS EC2
+Perform these steps to allow CloudShell to deploy sandboxes to an existing VPC on AWS. For details, see "Static Mode" in [Add an AWS EC2 Cloud Provider Resource
+](https://help.quali.com/Online%20Help/0.0/Portal/Content/Admn/VPC-AWS-Cld-Prvdr-Rsc.htm). 
+
+1. In Resource Manager Client, open the __Attributes__ tab and select the __Allocated CIDR__ attribute.
+2. Click the __Edit__ button, unselect the __Read-only__ checkbox, and save your changes.
+3. Open the __Resource Families__ tab.
+4. Expand __Virtual Network__ and select __Subnet__.
+5. Select __Allocated CIDR__ and click __Edit Rules__.
+6. Select the __User Input__ checkbox and save.
+6. In CloudShell Portal, open the suitable blueprint, specify the appropriate CIDR in the __Allocated CIDR__ attribute for each subnet service.
+
 # References
 To download and share integrations, see [Quali Community's Integrations](https://community.quali.com/integrations). 
 
