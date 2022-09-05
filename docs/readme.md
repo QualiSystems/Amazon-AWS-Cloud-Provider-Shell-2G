@@ -212,7 +212,7 @@ In online mode, the execution server automatically downloads and extracts the ap
 # Typical Workflows
 
 ### Configuring CloudShell to allow Static Mode in AWS EC2
-Perform these steps to allow CloudShell to deploy sandboxes to an existing VPC on AWS. For details, see "Static Mode" in [Add an AWS EC2 Cloud Provider Resource
+Perform these steps to allow CloudShell to deploy sandboxes using the __Static__ VPC Mode option. For details, see "Static Mode" in [Add an AWS EC2 Cloud Provider Resource
 ](https://help.quali.com/Online%20Help/0.0/Portal/Content/Admn/VPC-AWS-Cld-Prvdr-Rsc.htm). 
 
 1. In Resource Manager Client, open the __Attributes__ tab and select the __Allocated CIDR__ attribute.
