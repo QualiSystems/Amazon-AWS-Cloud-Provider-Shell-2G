@@ -118,6 +118,12 @@ node_types:
         Note that if this parameter is enabled and the credentials weren't retrieved
         within 15 minutes the deployment will fail."
         tags: [ user_input ]
+      Static Security Group Id:
+        type: string
+        default: ""
+        description: "An Id of an existing security group, that should be assigned to
+         an instance during it's deployment."
+        tags: [ user_input ]
       Custom Tags:
         type: string
         default: ""
@@ -138,11 +144,11 @@ node_types:
       Private IP:
         type: string
         default: ""
-        description: "When the VPC is in static mode this attribute is used to set a
+        description: 'When the VPC is in static mode this attribute is used to set a
         static private IP for the deployed app. To set static private IPs in multi
         subnet mode the expected value is a json string that maps the subnet request
         CIDR to the requested static private IP.
-        Example: {'10.0.0.0/28': '10.0.0.6'}"
+        Example: {"10.0.0.0/28": "10.0.0.6"}'
         tags: [ user_input ]
       Enable Source Dest Check:
         type: boolean

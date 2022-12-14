@@ -1,15 +1,21 @@
 from typing import List
 
+from cloudshell.api.cloudshell_api import InputNameValue
+from cloudshell.api.common_cloudshell_api import CloudShellAPIError
 from cloudshell.cp.core import DriverRequestParser
 from cloudshell.cp.core.models import ConnectSubnet, DeployApp, DriverResponse
 from cloudshell.cp.core.utils import single
 from cloudshell.shell.core.driver_context import ResourceCommandContext
 from cloudshell.shell.core.resource_driver_interface import ResourceDriverInterface
+from cloudshell.shell.core.session.cloudshell_session import CloudShellSessionContext
 
 from cloudshell.cp.aws.aws_shell import AWSShell
 from cloudshell.cp.aws.models.deploy_aws_ec2_ami_instance_resource_model import (
     DeployAWSEc2AMIInstanceResourceModel,
 )
+
+
+OPA_RESOURCE_NAME = "OPA"
 
 
 class AmazonAwsCloudProviderShell2GDriver(ResourceDriverInterface):
@@ -29,6 +35,7 @@ class AmazonAwsCloudProviderShell2GDriver(ResourceDriverInterface):
         pass
 
     def Deploy(self, context, request=None, cancellation_context=None):
+        self._execute_opa_validation_cmd(context, request)
         actions = self.request_parser.convert_driver_request_to_actions(request)
         deploy_action = single(actions, lambda x: isinstance(x, DeployApp))
         deployment_name = deploy_action.actionParams.deployment.deploymentPath
@@ -36,10 +43,35 @@ class AmazonAwsCloudProviderShell2GDriver(ResourceDriverInterface):
 
         if deployment_name in self.deployments.keys():
             deploy_method = self.deployments[deployment_name]
-            deploy_result = deploy_method(context, actions, cancellation_context)
+            deploy_result = deploy_method(context, actions,
+                                          cancellation_context)
             return DriverResponse(deploy_result).to_driver_response_json()
         else:
             raise Exception("Could not find the deployment")
+
+    def _check_opa_exists(self, api, opa_resource_name):
+        try:
+            api.GetResourceCommands(opa_resource_name)
+            return True
+        except CloudShellAPIError:
+            return
+
+    def _execute_opa_validation_cmd(self, context, plan_json):
+        resource_opa = OPA_RESOURCE_NAME
+        api = CloudShellSessionContext(context).get_api()
+        if not self._check_opa_exists(api, resource_opa):
+            return
+        try:
+            api.ExecuteCommand(
+                context.reservation.reservation_id,
+                resource_opa,
+                targetType="Resource",
+                commandName="validate",
+                commandInputs=[InputNameValue("validation_request", plan_json)],
+                printOutput=True
+            )
+        except CloudShellAPIError as e:
+            raise Exception(e.message)
 
     def parse_vnicename(self, actions):
         network_actions = [a for a in actions if isinstance(a, ConnectSubnet)]
@@ -76,6 +108,7 @@ class AmazonAwsCloudProviderShell2GDriver(ResourceDriverInterface):
         return self.aws_shell.delete_instance(context)
 
     def PrepareSandboxInfra(self, context, request, cancellation_context):
+        self._execute_opa_validation_cmd(context, request)
         actions = self.request_parser.convert_driver_request_to_actions(request)
         action_results = self.aws_shell.prepare_connectivity(
             context, actions, cancellation_context
