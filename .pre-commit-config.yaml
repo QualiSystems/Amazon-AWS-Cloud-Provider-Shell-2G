@@ -1,16 +1,16 @@
 repos:
   - repo: https://github.com/asottile/pyupgrade
-    rev: v3.1.0
+    rev: v3.3.1
     hooks:
       - id: pyupgrade
         args:
           - "--py37-plus"
   - repo: https://github.com/timothycrosley/isort
-    rev: 5.10.1
+    rev: 5.12.0
     hooks:
       - id: isort
   - repo: https://github.com/python/black
-    rev: 22.10.0
+    rev: 23.3.0
     hooks:
       - id: black
   - repo: https://github.com/pycqa/flake8
@@ -22,5 +22,9 @@ repos:
           flake8-builtins,
           flake8-comprehensions,
           flake8-print,
-          flake8-eradicate,
+          flake8-requirements,
+        ]
+        args: [
+          "--requirements-file=src/requirements.txt",
+          "--known-modules=:[src],cloudshell-cp-core:[cloudshell.cp.core],cloudshell-cp-aws:[cloudshell.cp.aws],cloudshell-shell-core:[cloudshell.shell.core]"
         ]
