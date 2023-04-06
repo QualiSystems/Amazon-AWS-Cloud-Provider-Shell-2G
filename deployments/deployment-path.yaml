@@ -127,13 +127,14 @@ node_types:
       User Data URL:
         type: string
         default: ""
-        description: "The URL of the user data script"
+        description: "The URL of the user data script either bash or powershell script"
         tags: [ user_input ]
       User Data Parameters:
         type: string
         default: ""
         description: "Parameters to execute the script e.g: 'param1 param2 ' will end
-        in running the command like this :'./file.sh param1 param2' "
+        in running the command like this :'./file.sh param1 param2' or 
+        'Invoke-Expression -Command file.ps1 param1 param2'"
         tags: [ user_input ]
       Private IP:
         type: string
