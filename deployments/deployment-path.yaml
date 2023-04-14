@@ -74,6 +74,12 @@ node_types:
         which you can provision up to 30 IOPS per GiB. If set to zero the default in
         the image will be used. For example: 240."
         tags: [ user_input ]
+      Static Security Group Id:
+        type: string
+        default: ""
+        description: "An Id of an existing security group, that should be assigned to
+         an instance during it's deployment."
+        tags: [ user_input ]
       Storage Type:
         type: string
         default: "auto"
