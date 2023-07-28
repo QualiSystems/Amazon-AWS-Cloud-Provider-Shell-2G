@@ -88,7 +88,7 @@ node_types:
         type which is the old generation EBS volume type. If auto is selected the
         storage type defined in the image will be used."
         constraints:
-          - valid_values: [ "auto", "gp2", "io1", "st1", "sc1", "standard" ]
+          - valid_values: [ "auto", "gp2", "gp3", "io1", "st1", "sc1", "standard" ]
         tags: [ user_input ]
       Root Volume Name:
         type: string
