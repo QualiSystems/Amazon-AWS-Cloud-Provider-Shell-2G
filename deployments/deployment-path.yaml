@@ -3,7 +3,7 @@ tosca_definitions_version: tosca_simple_yaml_1_0
 metadata:
   template_name: AmazonAWSCloudProviderShell2G
   template_author: Quali
-  template_version: 1.1.1
+  template_version: 1.2.0
   template_icon: DeploymentTypes-AWS-EC2.png
 
 description: >
@@ -88,7 +88,12 @@ node_types:
         type which is the old generation EBS volume type. If auto is selected the
         storage type defined in the image will be used."
         constraints:
-          - valid_values: [ "auto", "gp2", "io1", "st1", "sc1", "standard" ]
+          - valid_values: [ "auto", "gp2", "gp3", "io1", "io2", "st1", "sc1", "standard" ]
+        tags: [ user_input ]
+      Storage Encryption Key:
+        type: string
+        default: ""
+        description: "Allow KMS encryption for EC2 Instances for EBS Disks."
         tags: [ user_input ]
       Root Volume Name:
         type: string
