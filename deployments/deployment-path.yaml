@@ -41,6 +41,18 @@ node_types:
         default: ""
         description: "Provide the IAM role name to be used in this instance."
         tags: [ user_input ]
+      Create New Role:
+        type: boolean
+        default: false
+        description: "If set to True, a new IAM role will be created and attached to 
+        the instance. Role will be deleted after the Instance termination."
+        tags: [ user_input ]
+      Policies ARNs For New Role:
+        type: string
+        default: ""
+        description: "Provide the ARN of the policy to be attached to the newly created
+        role. Multiple policies can be provided, separated by a comma."
+        tags: [ user_input ]
       Inbound Ports:
         type: string
         default: ""
