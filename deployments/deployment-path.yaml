@@ -39,7 +39,7 @@ node_types:
       IAM Role Name:
         type: string
         default: ""
-        description: "Provide the IAM role name to be used in this instance."
+        description: "IAM role name to be used for this instance."
         tags: [ user_input ]
       Create New Role:
         type: boolean
@@ -50,7 +50,7 @@ node_types:
       Policies ARNs For New Role:
         type: string
         default: ""
-        description: "Provide the ARN of the policy to be attached to the newly created
+        description: "Policies ARNs to be attached to the newly created
         role. Multiple policies can be provided, separated by a comma."
         tags: [ user_input ]
       Inbound Ports:
@@ -105,7 +105,7 @@ node_types:
       Storage Encryption Key:
         type: string
         default: ""
-        description: "Allow KMS encryption for EC2 Instances for EBS Disks."
+        description: "Allows KMS encryption for EC2 Instances for EBS Disks."
         tags: [ user_input ]
       Root Volume Name:
         type: string
