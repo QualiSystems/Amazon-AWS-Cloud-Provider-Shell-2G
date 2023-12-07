@@ -3,7 +3,7 @@ tosca_definitions_version: tosca_simple_yaml_1_0
 metadata:
   template_name: AmazonAWSCloudProviderShell2G
   template_author: Quali
-  template_version: 1.2.0
+  template_version: 1.5.1
   template_icon: DeploymentTypes-AWS-EC2.png
 
 description: >
@@ -89,8 +89,8 @@ node_types:
       Static Security Group Id:
         type: string
         default: ""
-        description: "An Id of an existing security group, that should be assigned to
-         an instance during it's deployment."
+        description: "An ID or a Security group name of an existing security group, 
+        that should be assigned to an instance during it's deployment."
         tags: [ user_input ]
       Storage Type:
         type: string
